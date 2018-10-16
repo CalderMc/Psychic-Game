@@ -90,7 +90,7 @@ function resetGame() {
             document.getElementById("winning-image").style.cssText = "display: block";
             document.getElementById("pressKeyTryAgain").style.cssText = "display: block";
             wins++;
-            hasFinished = true;
+            gameEnded = true;
         }
     };
 
@@ -99,7 +99,7 @@ function resetGame() {
             document.getElementById("losing-image").style.cssText = "display: block";
             document.getElementById("pressKeyTryAgain").style.cssText = "display: block";
             losses++;
-            hasFinished = true;
+            gameEnded = true;
 
         }
     }
@@ -117,9 +117,9 @@ function resetGame() {
 
     // Event Listener
     document.onkeydown = function(event) {
-        if(hasFinished) {
+        if(gameEnded) {
             resetGame();
-            hasFinished = false;
+            gameEnded = false;
         } else {
             // Checking letters a-z
             if(event.keyCode >= 65 && event.keyCode <= 90) {
