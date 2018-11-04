@@ -12,6 +12,7 @@ const maxGuesses = 10;      //Maximum number of guesses allowed
 
 var lettersGuessed = [];    //Letters the player has guessed
 var currentWordIndex;       //Index of the current word in the array
+var currentWordArr;
 var actionWord = [];        //Current word being "built"
 var guessesRemaining = 0;   //Number of guesses left
 var gameStarted = false;    //Indicates that the game has begun
@@ -29,6 +30,13 @@ function resetGame() {
     // Clear out arrays
     lettersGuessed = [];
     actionWord = [];
+
+    var currentWord = wordList[currentWordIndex];
+    currentWordArr = currentWord.split("");
+    console.log("Current Word Arr", currentWordArr)
+
+    // Make sure the hangman image is cleared
+    document.getElementById("hangman").src = "";
 
     // Build the action word and clear it out
     for (var i = 0; i < wordList[currentWordIndex].length; i++) {
@@ -124,6 +132,9 @@ function resetGame() {
             // Checking letters a-z
             if(event.keyCode >= 65 && event.keyCode <= 90) {
                 makeGuess(event.key.toLowerCase());
+                updateDisplay();
+                checkWin();
+                checkLoss();
             }
         }
     };
