@@ -19,8 +19,10 @@ var gameStarted = false;    //Indicates that the game has begun
 var gameEnded = false;      //Activates "press any key to play"
 var wins = 0;               //Number of victories
 var losses = 0;             //Number of losses
+var whereToScroll = document.getElementById ("endingText");
 
 function resetGame() {
+    document.getElementById ("endingText").innerText = ""
     guessesRemaining = maxGuesses;
     gameStarted = false;
 
@@ -36,10 +38,10 @@ function resetGame() {
     console.log("Current Word Arr", currentWordArr)
 
     // Make sure the hangman image is cleared
-    document.getElementById("hangman").src = "";
+    //document.getElementById("hangman").src = "";
 
     // Build the action word and clear it out
-    for (var i = 0; i < wordList[currentWordIndex].length; i++) {
+    for (var i = 0; i < currentWordArr.length; i++) {
         actionWord.push("_");
     }
 
@@ -48,13 +50,11 @@ function resetGame() {
     document.getElementById("losing-image").style.cssText= "display: none";
     document.getElementById("winning-image").style.cssText= "display: none";
 
-    // This actually shows the display
-    updateDisplay();
 };
-
+    resetGame()
     // To update the display, we need a function
     function updateDisplay() {
-        document.getElementById("totalWins").innerText = wins;
+     
 
     // Show how much of the word has been guessed (Showing array would add commas)
     var actionWordText = "";
@@ -95,9 +95,15 @@ function resetGame() {
     // Checking for a win by checking remaining underscores
     function checkWin() {
         if(actionWord.indexOf("_") === -1) { 
+            console.log ("you won")
+            console.log (actionWord)
             document.getElementById("winning-image").style.cssText = "display: block";
             document.getElementById("pressKeyTryAgain").style.cssText = "display: block";
             wins++;
+            console.log (wins)
+            document.getElementById("endingText").innerText = "It's Good!!!!"
+            document.getElementById("totalWins").innerText = wins;
+            whereToScroll.scrollIntoView()
             gameEnded = true;
         }
     };
@@ -107,6 +113,9 @@ function resetGame() {
             document.getElementById("losing-image").style.cssText = "display: block";
             document.getElementById("pressKeyTryAgain").style.cssText = "display: block";
             losses++;
+            document.getElementById("endingText").innerText = "You lose sucka!!!!"
+            document.getElementById("totalLosses").innerText = losses;
+            whereToScroll.scrollIntoView()
             gameEnded = true;
 
         }
